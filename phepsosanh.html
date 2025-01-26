@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparison Problem Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .menu {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: row;
+        }
+        .menu > a {
+            margin-right: 20px;
+            flex: 1;
+            text-decoration: none;
+            text-align: center;
+            padding: 10px 0;
+            border: 1px solid black;
+            color: #000;
+        }
+        .menu > a.active {
+            background-color: #ddd;
+            font-weight: bold;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+        .tab.active {
+            background-color: #ddd;
+            font-weight: bold;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 5px;
+        }
+        .input-section {
+            margin-bottom: 20px;
+        }
+        input[type="number"] {
+            width: 50px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <a href="index.html" >Phép cộng</a>
+        <a href="phepnhan.html">Phép nhân</a>
+        <a href="phepsosanh.html" class="active">Phép sánh</a>
+    </div>
+    <div class="input-section">
+        <label for="range">Thay đổi phạm vi để tạo phép tính: </label>
+        <input type="number" id="range" value="40" min="1">
+        <button onclick="generateComparisons()">Tạo phép tính</button>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('problems-tab')">Phép so sánh</div>
+        <div class="tab" onclick="showTab('answers-tab')">Đáp án</div>
+    </div>
+
+    <div id="problems-tab" class="tab-content active">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="3">Phép so sánh</th>
+                </tr>
+            </thead>
+            <tbody id="problems">
+                <!-- Generated problems will appear here -->
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="3">Phép so sánh</th>
+                </tr>
+            </thead>
+            <tbody id="problems2">
+                <!-- Generated problems will appear here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="answers-tab" class="tab-content">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="3">Đáp án phép so sánh</th>
+                </tr>
+            </thead>
+            <tbody id="answers">
+                <!-- Generated answers will appear here -->
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="3">Đáp án phép so sánh</th>
+                </tr>
+            </thead>
+            <tbody id="answers2">
+                <!-- Generated answers will appear here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function generateComparisons() {
+            const range = parseInt(document.getElementById('range').value);
+            const problemsTable1 = document.getElementById('problems');
+            const problemsTable2 = document.getElementById('problems2');
+            const answersTable1 = document.getElementById('answers');
+            const answersTable2 = document.getElementById('answers2');
+
+            problemsTable1.innerHTML = '';
+            problemsTable2.innerHTML = '';
+            answersTable1.innerHTML = '';
+            answersTable2.innerHTML = '';
+
+            for (let i = 0; i < 50; i++) { // Generate 50 comparisons
+                const num1 = Math.floor(Math.random() * range);
+                const num2 = Math.floor(Math.random() * range);
+
+                let comparisonSymbol;
+                if (num1 < num2) {
+                    comparisonSymbol = '<';
+                } else if (num1 > num2) {
+                    comparisonSymbol = '>';
+                } else {
+                    comparisonSymbol = '=';
+                }
+
+                const problemRow = document.createElement('tr');
+                const answerRow = document.createElement('tr');
+
+                // problemRow.innerHTML = `<td>${num1} ? ${num2}</td>`;
+                problemRow.innerHTML = `<td>${num1}</td><td></td><td>${num2}</td>`;
+                // answerRow.innerHTML = `<td>${num1} ? ${num2}</td><td>${comparisonSymbol}</td>`;
+                answerRow.innerHTML = `<td>${num1}</td><td>${comparisonSymbol}</td><td>${num2}</td>`;
+
+                if (i < 25) {
+                    problemsTable1.appendChild(problemRow);
+                    answersTable1.appendChild(answerRow);
+                } else {
+                    problemsTable2.appendChild(problemRow);
+                    answersTable2.appendChild(answerRow);
+                }
+            }
+        }
+
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            document.querySelector(`#${tabId}`).classList.add('active');
+            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+        }
+
+        // Generate comparisons on page load
+        window.onload = generateComparisons;
+    </script>
+</body>
+</html>
