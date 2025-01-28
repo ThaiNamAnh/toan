@@ -69,12 +69,14 @@
 <body>
     <div class="menu">
         <a href="index.html" >Phép cộng</a>
+        <a href="pheptru.html">Phép trừ</a>
         <a href="phepnhan.html">Phép nhân</a>
-        <a href="phepsosanh.html" class="active">Phép so sánh</a>
+        <a href="phepchia.html">Phép chia</a>
+        <a href="phepsosanh.html" class="active">So sánh</a>
     </div>
     <div class="input-section">
         <label for="range">Thay đổi phạm vi để tạo phép tính: </label>
-        <input type="number" id="range" value="40" min="1">
+        <input type="number" id="range" value="10" min="1">
         <button onclick="generateComparisons()">Tạo phép tính</button>
     </div>
 
@@ -143,8 +145,8 @@
             answersTable2.innerHTML = '';
 
             for (let i = 0; i < 50; i++) { // Generate 50 comparisons
-                const num1 = Math.floor(Math.random() * range);
-                const num2 = Math.floor(Math.random() * range);
+                const num1 = Math.floor(Math.random() * range + 1);
+                const num2 = Math.floor(Math.random() * range + 1);
 
                 let comparisonSymbol;
                 if (num1 < num2) {
@@ -186,6 +188,13 @@
 
         // Generate comparisons on page load
         window.onload = generateComparisons;
+
+        // Add event listener for Enter key
+        document.getElementById('range').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                generateComparisons();
+            }
+        });
     </script>
 </body>
 </html>

@@ -69,13 +69,15 @@
 <body>
     <div class="menu">
         <a href="index.html">Phép cộng</a>
+        <a href="pheptru.html">Phép trừ</a>
         <a href="phepnhan.html" class="active">Phép nhân</a>
-        <a href="phepsosanh.html">Phép so sánh</a>
+        <a href="phepchia.html">Phép chia</a>
+        <a href="phepsosanh.html">So sánh</a>
     </div>
 
     <div class="input-section">
         <label for="range">Thay đổi phạm vi để tạo phép tính: </label>
-        <input type="number" id="range" value="40" min="1">
+        <input type="number" id="range" value="10" min="1">
         <button onclick="generateProblems()">Tạo phép tính</button>
     </div>
 
@@ -148,8 +150,8 @@
             answersTable2.innerHTML = '';
 
             for (let i = 0; i < 48; i++) { // Generate 40 problems
-                const num1 = Math.floor(Math.random() * range);
-                const num2 = Math.floor(Math.random() * range);
+                const num1 = Math.floor(Math.random() * range + 1);
+                const num2 = Math.floor(Math.random() * range + 1);
 
                 const problemRow = document.createElement('tr');
                 const answerRow = document.createElement('tr');
@@ -187,6 +189,13 @@
 
         // Generate problems on page load
         window.onload = generateProblems;
+
+        // Add event listener for Enter key
+        document.getElementById('range').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                generateProblems();
+            }
+        });
     </script>
 </body>
 </html>
